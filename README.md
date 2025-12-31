@@ -1,4 +1,4 @@
-# Nia Agent Configuration Rules
+# Nia Rules
 
 Open-source configuration files for [Nia](https://trynia.ai) to 10x any coding agent.
 
@@ -11,16 +11,16 @@ This repository provides pre-configured rules and prompts that teach AI coding a
 ### 1. Copy Configuration
 ```bash
 # For Claude
-cp .claude/agents/nia-oracle.md ~/.claude/agents/
+cp .claude/agents/nia-rules.md ~/.claude/agents/
 
 # For Codex
-cp .codex/prompts/nia-oracle.md ~/.codex/prompts/
+cp .codex/prompts/nia-rules.md ~/.codex/prompts/
 
 # For Cursor  
-cp .cursor/rules/nia-oracle.mdc ~/.cursor/rules/
+cp .cursor/rules/nia-rules.mdc ~/.cursor/rules/
 
 # For Windsurf
-cp .windsurf/rules/nia-oracle.md ~/.windsurf/rules/
+cp .windsurf/rules/nia-rules.md ~/.windsurf/rules/
 
 # For other agents, follow similar pattern
 ```
@@ -29,7 +29,7 @@ cp .windsurf/rules/nia-oracle.md ~/.windsurf/rules/
 Ensure your agent has access to Nia's MCP tools. See [trynia.ai](https://trynia.ai) for setup instructions.
 
 ### 3. Start Research
-Your agent now becomes a **Nia Oracle** - a research specialist that can:
+Your agent now becomes a **Nia research specialist** that can:
 - Index any GitHub repo or documentation site
 - Perform searches across codebases
 - Conduct deep technical research
