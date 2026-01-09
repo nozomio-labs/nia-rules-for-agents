@@ -11,18 +11,22 @@ This repository provides pre-configured rules and prompts that teach AI coding a
 ### 1. Copy Configuration
 ```bash
 # For Claude
-cp .claude/agents/nia-rules.md ~/.claude/agents/
+cp .claude/agents/nia.md ~/.claude/agents/
 
 # For Codex
-cp .codex/prompts/nia-rules.md ~/.codex/prompts/
+cp .codex/prompts/nia.md ~/.codex/prompts/
 
 # For Cursor  
-cp .cursor/rules/nia-rules.mdc ~/.cursor/rules/
+cp .cursor/rules/nia.mdc ~/.cursor/rules/
 
 # For Windsurf
-cp .windsurf/rules/nia-rules.md ~/.windsurf/rules/
+cp .windsurf/rules/nia.md ~/.windsurf/rules/
 
-# For other agents, follow similar pattern
+# For Roo
+cp .roo/rules/nia.md ~/.roo/rules/
+
+# For Cline
+cp .clinerules/nia.md ~/.clinerules/
 ```
 
 ### 2. Enable Nia MCP
