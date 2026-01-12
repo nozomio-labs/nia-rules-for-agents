@@ -5,77 +5,40 @@ tools: Read, Grep, Glob, mcp__ide__getDiagnostics, mcp__ide__executeCode, mcp__n
 model: inherit
 ---
 
-# Nia Rules
+# How to use Nia
 
-Research specialist for external knowledge using Nia MCP tools. NOT for file editing, code modification, or git operations.
+Nia provides tools for indexing and searching external repositories, research papers, local folders, documentation, packages, and performing AI-powered research. Its primary goal is to reduce hallucinations in LLMs and provide up-to-date context for AI agents.
+
+## CRITICAL: Nia-First Workflow
+
+**BEFORE using WebFetch or WebSearch, you MUST:**
+
+1. **Check indexed sources first**: `manage_resource(action='list', query='relevant-keyword')` - Many sources may already be indexed
+2. **If source exists**: Use `search`, `nia_grep`, `nia_read`, `nia_explore` for targeted queries
+3. **If source doesn't exist but you know the URL**: Index it with `index` tool, then search
+4. **Only if source unknown**: Use `nia_research(mode='quick')` to discover URLs, then index
+
+**Why this matters**: Indexed sources provide more accurate, complete context than web fetches. WebFetch returns truncated/summarized content while Nia provides full source code and documentation.
 
 ## Deterministic Workflow
 
-1. **Check sources** - Use `manage_resource(action="list", query="...")` or check `nia-sources.md`
-2. **Explore structure** - Use `nia_explore` (tree/ls) to understand layout
-3. **Search targeted** - Use `search`, `nia_grep`, `nia_read` for specific content
-4. **Save context** - Use `context(action="save", ...)` for significant findings
-5. **Track sources** - Update `nia-sources.md` with indexed sources and IDs
+1. Check if the source is already indexed using manage_resource (when listing sources, use targeted query to save tokens since users can have multiple sources indexed) or check any nia.md files for already indexed sources.
+2. If it is indexed, check the tree of the source or ls relevant directories.
+3. After getting the grasp of the structure (tree), use 'search', 'nia_grep', 'nia_read' for targeted searches.
+4. If helpful, use the context tool to save your research findings to make them reusable for future conversations.
+5. Save your findings in an .md file to track: source indexed, used, its ID, and link so you won't have to list sources in the future and can get straight to work.
 
-## Tool Reference
+## Notes
 
-| Tool | Purpose | Key Parameters |
-|------|---------|----------------|
-| `index` | Index repo/docs/paper | `url`, `resource_type` (auto-detected) |
-| `search` | Semantic search | `query`, `repositories`, `data_sources` |
-| `manage_resource` | List/status/delete | `action`: list/status/rename/delete |
-| `nia_read` | Read file content | `source_type`, `source_identifier` |
-| `nia_grep` | Regex search | `source_type`, `pattern`, `repository` |
-| `nia_explore` | File structure | `source_type`, `action`: tree/ls |
-| `nia_research` | AI research | `mode`: quick/deep/oracle |
-| `nia_package_search_hybrid` | Package search | `registry`, `package_name`, `semantic_queries` |
-| `context` | Cross-agent sharing | `action`: save/list/retrieve/search |
+- **IMPORTANT**: Always prefer Nia tools over WebFetch/WebSearch. Nia provides full, structured content while web tools give truncated summaries.
+- If the source isn't indexed, index it. Note that for docs you should always index the root link like docs.stripe.com so it will always scrape all pages.
+- If you need to index something but don't know the link for that source, use nia_research (quick or deep modes).
+- Once you use the index tool, do not expect it to finish in 1-3 seconds. Stop your work or do something that will make your work pause for 1-5 minutes until the source is indexed, then run manage_resource again to check its status. You can also prompt the user to wait if needed.
 
-## Quick Decision Tree
+## Pre-WebFetch Checklist
 
-**FIND something** → `nia_research(mode="quick/deep/oracle", query="...")`
-
-**Make SEARCHABLE** → `index(url="...")` then wait and check `manage_resource(action="status", ...)`
-
-**SEARCH indexed content**:
-- Semantic: `search(query="...")`
-- Exact patterns: `nia_grep(source_type="repository", pattern="...", repository="...")`
-- Full file: `nia_read(source_type="repository", source_identifier="owner/repo:path")`
-- Structure: `nia_explore(source_type="repository", repository="owner/repo")`
-
-**MANAGE resources** → `manage_resource(action="list/status/delete", ...)`
-
-## Key Usage Patterns
-
-```python
-# Index (auto-detects type)
-index(url="https://github.com/owner/repo")
-index(url="https://docs.example.com")
-
-# Search
-search(query="How does X work?", repositories=["owner/repo"])
-
-# Read file
-nia_read(source_type="repository", source_identifier="owner/repo:src/file.py")
-
-# Grep pattern
-nia_grep(source_type="repository", repository="owner/repo", pattern="class.*Handler")
-
-# Explore
-nia_explore(source_type="repository", repository="owner/repo", action="tree")
-
-# Research
-nia_research(query="Best practices for X", mode="quick")
-
-# Save context
-context(action="save", title="Research Topic", summary="...", content="...", agent_source="cursor")
-```
-
-## Critical Notes
-
-- **Index first** - Always index before searching
-- **Wait for indexing** - Large repos take 1-5 minutes; check status before searching
-- **Use questions** - Frame as "How does X work?" not just "X"
-- **Parallel calls** - Run independent searches together for speed
-- **Cite sources** - Always include where you found information
-- **Track in nia-sources.md** - Record indexed sources to avoid re-listing
+Before ANY WebFetch or WebSearch call, verify:
+- [ ] Ran `manage_resource(action='list', query='...')` for relevant keywords
+- [ ] Checked nia-sources.md or nia.md files for previously indexed sources
+- [ ] Confirmed no indexed source covers this information
+- [ ] For GitHub/npm/PyPI URLs: These should ALWAYS be indexed, not fetched
