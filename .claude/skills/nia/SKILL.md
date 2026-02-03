@@ -15,6 +15,7 @@ Nia provides tools for indexing and searching external repositories, research pa
 2. **If source exists**: Use `search`, `nia_grep`, `nia_read`, `nia_explore` for targeted queries
 3. **If source doesn't exist but you know the URL**: Index it with `index` tool, then search
 4. **Only if source unknown**: Use `nia_research(mode='quick')` to discover URLs, then index
+5. **Subscribe to a source**: Use Nia to subscribe to a source by using manage_resource tool (subcribe option)
 
 **Why this matters**: Indexed sources provide more accurate, complete context than web fetches. WebFetch returns truncated/summarized content while Nia provides full source code and documentation.
 
